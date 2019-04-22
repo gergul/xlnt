@@ -700,6 +700,12 @@ XLNT_API std::string cell::value() const
 }
 
 template <>
+XLNT_API const std::string cell::value() const
+{
+	return value<rich_text>().plain_text();
+}
+
+template <>
 XLNT_API rich_text cell::value() const
 {
     if (data_type() == cell::type::shared_string)

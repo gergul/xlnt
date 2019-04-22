@@ -512,7 +512,14 @@ std::string xlsx_consumer::read_worksheet_begin(const std::string &rel_id)
 
                         if (parser().attribute_present("ySplit"))
                         {
-                            new_pane.y_split = parser().attribute<row_t>("ySplit");
+							try
+							{
+								new_pane.y_split = parser().attribute<row_t>("ySplit");
+							}
+							catch (...)
+							{
+								//Gergul
+							}                            
                         }
 
                         if (parser().attribute_present("activePane"))

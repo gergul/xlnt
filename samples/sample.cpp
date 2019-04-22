@@ -22,6 +22,7 @@
 // @author: see AUTHORS file
 
 #include <xlnt/xlnt.hpp>
+#include <windows.h>
 
 int main()
 {
@@ -38,16 +39,44 @@ int main()
 
 		wb.save("sample.xlsx");
 	}
+
+	DWORD t = ::GetTickCount();
 	{
 		xlnt::workbook wb;
-		wb.load("sample.xlsx");
-		xlnt::worksheet ws = wb.active_sheet();		
-		int nVal = ws.cell("A1").value<int>();
-		std::string sVal = ws.cell("B2").value<std::string>();
-		double dVal = ws.cell("C3").value<double>();
+		wb.load("F:\\mat.xlsx");
+		xlnt::worksheet ws = wb.active_sheet();
+		
+		int rowCount = 0;
+
+		xlnt::range r = ws.rows();
+		for (int i = 0; i < r.length(); ++i)
+		{
+			const xlnt::cell_vector& c = r[i];
+			for (int j = 0; j < c.length(); ++j)
+			{
+				//std::cout << 
+					c[j].to_string();
+			}
+
+			++rowCount;
+		}
+
+		//for (xlnt::worksheet::iterator it = ws.begin(); it != ws.end(); ++it)
+		//{
+		//	/*for (xlnt::cell_vector::iterator itCell = (*it).begin(); itCell != (*it).end(); ++itCell)
+		//	{
+		//		std::string s = (*itCell).to_string();
+		//		//std::cout << s;
+		//	}*/
+
+		//	++rowCount;
+		//}
+
+		std::cout << rowCount << std::endl;
 	}
+	std::cout << ::GetTickCount() - t << std::endl;
 
-
+	system("pause");
 
     return 0;
 }
